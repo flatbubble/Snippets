@@ -15,7 +15,7 @@ by this way we can cache our css files while still having always the last versio
 
 How to use:
 - Add or edit all the files from the Autoversion folder to your project
-- Example: <link rel="stylesheet" href="{{ Autoversion::version('/css/styles.css') }} " />
+- Example: {{ Autoversion::version('/css/styles.css') }} 
 
 
 Licence
