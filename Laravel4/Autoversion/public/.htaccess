@@ -1,0 +1,44 @@
+<IfModule mod_rewrite.c>
+	Options +FollowSymLinks
+	RewriteEngine On
+</IfModule>
+
+# Allow versioning for js and css files
+RewriteRule ^(.*)\.[\d]+\.(css|js)$ $1.$2 [L] # Strip out the version number
+# End Allow versioning for js and css files
+
+
+# For all files not found in the file system, reroute the request to the
+# "index.php" front controller, keeping the query string intact
+
+<IfModule mod_rewrite.c>
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+<ifModule mod_headers.c>
+# YEAR
+<filesMatch ".(ico|gif|jpg|jpeg|png|flv|pdf)$">
+  Header set Cache-Control "max-age=29030400"
+</filesMatch>
+# WEEK
+<filesMatch ".(js|css|swf)$">
+  Header set Cache-Control "max-age=604800"
+</filesMatch>
+</ifModule>
+
+<IfModule mod_deflate.c>
+SetOutputFilter DEFLATE
+
+# You can't compress what is already compressed
+
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+
+# Make proxies work as they should.
+<IfModule mod_headers.c>
+Header append Vary User-Agent
+</IfModule>
+
+</IfModule>

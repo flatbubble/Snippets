@@ -1,0 +1,8 @@
+{
+/** add the following to autoload */
+	"autoload": {
+		"psr-0": {
+            		"Flatbubble": "app/lib"
+		}
+        }
+}
